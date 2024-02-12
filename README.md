@@ -1,3 +1,12 @@
+# Alan Ai Weather Application Powered By Styled Components
+
+# Core packages <br/>
+React Router - Routing <br/>
+Styling - Styled Components <br/>
+Icons - React Icons <br/>
+Network - Calls = fetch api <br/>
+# Screenshots
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
