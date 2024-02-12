@@ -4,7 +4,7 @@
 React Router - Routing <br/>
 Styling - Styled Components <br/>
 Icons - React Icons <br/>
-Network - Calls = fetch api <br/>
+Network Calls - fetch api <br/>
 # Screenshots
 # Home Page 
 ![homepage](https://github.com/reobest/weather/assets/88613447/2f1bb26f-bc8a-4ed3-a21e-563a957d9d2e)
