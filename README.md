@@ -6,7 +6,10 @@ Styling - Styled Components <br/>
 Icons - React Icons <br/>
 Network - Calls = fetch api <br/>
 # Screenshots
-
+# Home Page 
+![homepage](https://github.com/reobest/weather/assets/88613447/2f1bb26f-bc8a-4ed3-a21e-563a957d9d2e)
+# Weather Catagories
+![weathercat](https://github.com/reobest/weather/assets/88613447/c1e627c8-3b00-41b2-a9a5-87296ccbfe8c)
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
