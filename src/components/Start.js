@@ -1,16 +1,25 @@
 import React from 'react'
 import styled from 'styled-components';
-import weather from '../images/weather.jpeg';
+import weather from '../images/Weather.jpg';
 import { useGlobalContext } from './context'
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 const Start = () => {
   const context = useGlobalContext()
     const {start} = context 
-    console.log(start)
+    const navigate = useNavigate();
+    if(start == true){
+      setTimeout(() => {
+        navigate('/start')
+      }, 2000);
+    }else{
+      setTimeout(() => {
+        navigate('/')
+      }, 2000);
+    }
   return (
     <WeatherContainer>
-      <Alan style={{color: start ? '#3498db' : '#ed2020'}}>Alan</Alan>
-     <Link to={start ? `/start` : '/'}><ChoiceButton style={{background: start ? '#3498db' : '#ed2020'}}>Try Saying : WEATHER</ChoiceButton></Link>
+      <Alan start={start}>Alan</Alan>
+      <ChoiceButton start={start}> Say : WEATHER</ChoiceButton>
     </WeatherContainer>
   )
 }
@@ -29,17 +38,15 @@ const WeatherContainer = styled.div`
 const Alan = styled.h1`
     font-size: 60px;
     letter-spacing: 5px;
-    color: rgb(92 143 255 / 95%);
+    color: ${props => props.start ? '#3498db' : '#ed2020'};
     margin: 0;
+    transition: color 2s ease-in-out;
 `
 const ChoiceButton = styled.div`
-  cursor: pointer;
-  margin-top: 20px;
+  cursor: ${props => props.start ? "pointer" : "auto"};
   width: 400px;
   box-sizing: border-box;
-  appearance: none;
-  background-color: transparent;
-  border-radius: 1px;
+  background-color: ${props => props.start ? "#3498db" : "#ed2020"};
   display: flex;
   justify-content: center;
   align-self: center;
@@ -47,18 +54,11 @@ const ChoiceButton = styled.div`
   font-weight: 400;
   line-height: 1;
   padding: 1.2em 2.8em;
-  text-decoration: none;
   text-transform: uppercase;
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
-  border-color: #3498db;
   color: #fff;
-  transition: all 350ms ease-in-out;
-  :hover {
-    box-shadow: 0 0 10px 0 #3498db inset, 0 0 10px 4px #3498db;
-    color: #3498db;
-    background-color: #fff;
-  }
+  transition: background-color 2s ease-in-out;
   @media screen and (max-width:400px) {
       width: 300px;
       font-size: 12px;

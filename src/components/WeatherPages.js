@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import weather from '../images/weather.jpeg'
+import weather from '../images/Weather.jpg'
 import { useGlobalContext } from './context'
 import cloudSuny from '../images/weather1.png'
 import rain from '../images/rain.png'
@@ -19,15 +19,15 @@ const WeatherPages = () => {
       <Day>{w.dt_txt.slice(0,11)}</Day>
      { w.weather.map((w) => {
          if(w.main == 'Clouds') {
-          return <img style={{width: "50px",transform: "translate(-5px,7px)"}} src={cloudSuny}></img>
+          return <WetherImage src={cloudSuny}></WetherImage>
         }else if (w.main == "Rain") {
-          return <img style={{width: "50px",transform: "translate(-5px,7px)"}} src={rain}></img> 
+          return <WetherImage  src={rain}></WetherImage> 
         }
         else if (w.main == "Snow") {
-          return <img style={{width: "50px",transform: "translate(-5px,7px)"}} src={snow}></img> 
+          return <WetherImage  src={snow}></WetherImage> 
         }
         else if (w.main == "Clear") {
-          return <img style={{width: "50px",transform: "translate(-5px,7px)"}} src={sunny}></img> 
+          return <WetherImage  src={sunny}></WetherImage> 
         }
      })
      }         
@@ -38,37 +38,37 @@ const WeatherPages = () => {
      
      
      :
-    <Card key={Math.random()} >                              
+        <Card key={Math.random() + Math.random()} >                              
                  <Cityname>Weather in {articals.name}</Cityname>
-                 <Temp>{articals.weather.map((w) => {
+                 <Temp>{articals?.weather?.map((w) => {
                   if(w.main == 'Clouds') {
-                    return <img style={{width: "50px",transform: "translate(-5px,7px)"}} src={cloudSuny}></img>
+                    return <WetherImage  src={cloudSuny}></WetherImage>
                   }else if (w.main == "Rain") {
-                    return <img style={{width: "50px",transform: "translate(-5px,7px)"}} src={rain}></img> 
+                    return <WetherImage  src={rain}></WetherImage> 
                   }
                   else if (w.main == "Snow") {
-                    return <img style={{width: "50px",transform: "translate(-5px,7px)"}} src={snow}></img> 
+                    return <WetherImage  src={snow}></WetherImage> 
                   }
                   else if (w.main == "Clear") {
-                    return <img style={{width: "50px",transform: "translate(-5px,7px)"}} src={sunny}></img> 
+                    return <WetherImage  src={sunny}></WetherImage> 
                   }
-                 })}{Math.floor(articals.main.temp - 273)}°C</Temp>
-                 <Feelslike>Feels Like: {articals.weather.map((w) => {
+                 })}{Math.floor(articals?.main?.temp - 273)}°C</Temp>
+                 <Feelslike>Feels Like: {articals?.weather?.map((w) => {
                   if(w.main == 'Clouds') {
-                    return <span style={{fontSize:"17px",fontWeight:"400",  color: "#b509f3"}}>{w.description}</span> 
+                    return <Description >{w.description}</Description> 
                   }else if (w.main == "Rain") {
-                    return <span style={{fontSize:"17px",fontWeight:"400",  color: "#b509f3"}}>{w.description}</span> 
+                    return <Description >{w.description}</Description> 
                   }
                   else if (w.main == "Snow") {
-                    return <span style={{fontSize:"17px",fontWeight:"400",  color: "#b509f3"}}>{w.description} </span> 
+                    return <Description>{w.description} </Description> 
                   }
                   else if (w.main == "Clear") {
                     return <span>{w.description}</span> 
                   }
                  })}</Feelslike>
-                 <Humidity><span style={{color:"#000"}}>Humidity:</span>  {articals.main.humidity}%</Humidity>
-                 <Windspeed><span style={{color:"#000"}}>Wind Speed:</span>  {articals.wind.speed}  km/h</Windspeed>
-                 <Pressure><span style={{color:"#000"}}>Pressure:</span>{articals.main.pressure}  hpa </Pressure>
+                 <Humidity><span>Humidity:</span>  {articals?.main?.humidity}%</Humidity>
+                 <Windspeed><span>Wind Speed:</span>  {articals?.wind?.speed}  km/h</Windspeed>
+                 <Pressure><span >Pressure:</span>{articals?.main?.pressure}  hpa </Pressure>
     </Card>}
     </NewPagesContainer>
     </>
@@ -76,6 +76,15 @@ const WeatherPages = () => {
 }
 
 export default WeatherPages
+const WetherImage = styled.img`
+ width:50px;
+ transform: translate(-5px,7px);
+`
+const Description = styled.span`
+font-size:17px;
+font-weight:400;
+color: #b509f3;
+`
 const H = styled.div`
 margin:0;
 text-align:center;
@@ -134,51 +143,63 @@ background-color: #fff;
   align-items: flex-start;
   justify-content: center;
   flex-direction: column;
-  width: 400px;
-  height: 300px;
-  border-radius: 15px;
+  width: 600px;
+  height: 400px;
+  border-radius: 8px;
   padding-left: 40px;
   @media screen and (max-width:400px) {
-      margin: 0px 10px;
-      transform: translateY(-80px);
-      height: 350px;
+      bottom: 80px;
+      height: 450px;
     }
 `
 const Cityname = styled.p`
-  font-size: 30px;
-  font-weight: 500;
+  font-size: 55px;
+  font-weight: 400;
   margin: 0;
   margin-bottom: 5px;
+  @media screen and (max-width:400px) {
+    font-size: 45px;
+  }
 `
 const Temp = styled.div`
 font-size:45px;
 font-weight: 500;
 color: #ffd100;
 margin-bottom: 5px;
+display: flex;
+align-items: center;
 `
 const Feelslike = styled.h1`
-margin: 0;
-margin-bottom: 5px;
-  font-size: 15px;
+  margin: 10px 0;
+  font-size: 18px;
   font-weight: 400;
 `
 const Humidity = styled.span`
-font-size: 15px;
+font-size: 17px;
 font-weight: 400;
 color: #b509f3;
+span{
+  color: #000;
+}
  `
 const Windspeed = styled.h5`
   background-color: transparent;
-  font-size: 15px;
+  font-size: 17px;
   margin-top: 5px;
   margin-bottom: 0;
   font-weight: 400;
   color: #b509f3;
+  span{
+  color: #000;
+}
 `
 const Pressure = styled.span`
 margin: 0;
 margin-top: 5px;
-  font-size: 15px;
+  font-size: 17px;
 font-weight: 400;
 color: #b509f3;
+span{
+  color: #000;
+}
 `

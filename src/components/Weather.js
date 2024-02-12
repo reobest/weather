@@ -1,44 +1,74 @@
 import React from 'react'
 import styled from 'styled-components';
-import weather from '../images/weather.jpeg'
+import weather from '../images/Weather.jpg'
 import classifications from './Classify';
 import { useGlobalContext } from './context';
-import { Link} from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 const Weather = () => {
+  const navigate = useNavigate();
     const context = useGlobalContext()
-    const {cardOne,cardTwo,cardThree,handleClick,hover,setHovering,unsetHovering} = context
-    const redirect = () => {
-      window.location.replace('http://bulk.openweathermap.org/sample/')
-    } 
-    const newCards =   classifications.map((c) => {
-        const {footer,id} = c  
-            if(id ==1 && cardOne) {
-                return <Link to={`/${id}`} key={id}><Card id={id}   onClick={(e) => handleClick(e.target.id)}>
+    const {cardOne,cardTwo,cardThree,handleNavigate,keyWord,setKeyWord} = context 
+    const handleKeyWord = () => {
+      if(cardOne == true ) {
+        setKeyWord("1")
+      }else if(cardTwo == true){
+        setKeyWord("2")
+      }else if(cardTwo == true){
+        setKeyWord("3")
+      }else{
+        setKeyWord("")
+      }
+    }
+    const handleWeatherPage = () => {
+      if(keyWord == "1" && cardOne ) {
+        handleNavigate(keyWord)
+        navigate(`/${keyWord}`)
+      }
+      if(keyWord == "2" && cardTwo ) {
+        handleNavigate(keyWord)
+        navigate(`/${keyWord}`)
+      }
+      if(keyWord == "3" && cardThree ) {
+        handleNavigate(keyWord)
+        navigate(`/${keyWord}`)
+      }
+    }
+    handleKeyWord()
+    handleWeatherPage()
+
+  const newCards = classifications.map((classification) => {
+        const {footer,id} = classification  
+ return <Card key={id}>
            <TrySaying>Try Saying : {footer}</TrySaying>
-        </Card></Link>
-            }
-            if(id ==2 && cardTwo) {
-                return  <Link to={`/${id}`} key={id} onMouseOver={setHovering} onMouseOut={unsetHovering}><Card id={id}  onClick={(e) => handleClick(e.target.id)}>
-           <TrySaying>{hover == true ? <span onClick={redirect}>Download Pdf Of Codes</span> : "Try Saying :" + footer}</TrySaying>
-        </Card></Link> 
-            }
-            if(id ==3 && cardThree) {
-              return  <Link to={`/${id}`} key={id}><Card id={id}   onClick={(e) => handleClick(e.target.id)}>
- <TrySaying>Try Saying :{footer}</TrySaying>
-      </Card></Link> 
-          }
-      }) 
+        </Card>
+  }) 
   return (
     <WeatherContainer>
-        <CardContainer>
-          <Header>Alan AI Weather Application</Header>
-        {newCards}
+      <CardContainer>
+        <Header>Alan AI Weather Application</Header>
+          {newCards}
         </CardContainer>
+      <CodeLinks href='http://bulk.openweathermap.org/sample/'>Country Codes</CodeLinks>
     </WeatherContainer>
   )
 }
 
 export default Weather
+const CodeLinks = styled.a`
+    width: 130px;
+    height: 40px;
+    display: flex;
+    font-size: 13px;
+    letter-spacing: 1px;
+    font-weight: 500;
+    justify-content: center;
+    border-radius: 5px;
+    align-items: center;
+    background: #fff;
+    position: absolute;
+    bottom: 30px;
+    color: #000;
+`
 const Header = styled.h1`
   margin:0;
   text-align:center;
@@ -46,15 +76,13 @@ const Header = styled.h1`
   top: 20px;
   width:100%;
   letter-spacing:5px;
-  color:#fff;
-  padding:10px 0;
+  color:#000;
   font-size:40px;
   font-weight:400;
   @media screen and (max-width:400px) {
       font-size: 20px;
   }
 `
-
 const WeatherContainer = styled.div`
   min-height: 100vh;
   width: 100%;
@@ -64,9 +92,6 @@ const WeatherContainer = styled.div`
   align-items: center;
   background: url(${weather});
   background-size: cover;
-  @media screen and (max-width:400px) {
-      background-position-x: 20px;
-    }
 `
 const CardContainer = styled.div`
 display: flex;
@@ -99,56 +124,14 @@ font-weight: 500;
       font-size: 12px;
     }
 `
-const Alan = styled.h1`
-    font-size: 60px;
-    letter-spacing: 5px;
-    color: rgb(92 143 255 / 95%);
-    margin: 0;
-    @media screen and (max-width:400px) {
-      font-size: 40px;
-    }
-
-`
 const TrySaying = styled.p`
   margin: 0;
   text-align: left;
   margin-left: 20px;
   font-size: 17px;
-  color: #fff;
+  color: #000;
   @media screen and (max-width:400px) {
       font-size: 12px;
     }
 `
-const ChoiceButton = styled.div`
-  cursor: pointer;
-  margin-top: 20px;
-  width: 400px;
-  box-sizing: border-box;
-  appearance: none;
-  background-color: transparent;
-  border-radius: 1px;
-  display: flex;
-  justify-content: center;
-  align-self: center;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1;
-  padding: 1.2em 2.8em;
-  text-decoration: none;
-  text-transform: uppercase;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 700;
-  border-color: #3498db;
-  color: #fff;
-  box-shadow: 0 0 40px 40px #3498db inset, 0 0 0 0 #3498db;
-  transition: all 350ms ease-in-out;
-  :hover {
-    box-shadow: 0 0 10px 0 #3498db inset, 0 0 10px 4px #3498db;
-    color: #3498db;
-    background-color: #fff;
-  }
-  @media screen and (max-width:400px) {
-      width: 200px;
-      font-size: 12px;
-    }
-`
+
