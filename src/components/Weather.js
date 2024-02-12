@@ -7,7 +7,7 @@ import { useNavigate} from 'react-router-dom';
 const Weather = () => {
   const navigate = useNavigate();
     const context = useGlobalContext()
-    const {cardOne,cardTwo,cardThree,handleNavigate,keyWord,setKeyWord} = context 
+    const {cardOne,cardTwo,cardThree,handleNavigate,keyWord,setKeyWord,start} = context 
     const handleKeyWord = () => {
       if(cardOne == true ) {
         setKeyWord("1")
@@ -43,13 +43,15 @@ const Weather = () => {
         </Card>
   }) 
   return (
-    <WeatherContainer>
+    <>
+    { start && <WeatherContainer>
       <CardContainer>
         <Header>Alan AI Weather Application</Header>
           {newCards}
-        </CardContainer>
-      <CodeLinks href='http://bulk.openweathermap.org/sample/'>Country Codes</CodeLinks>
-    </WeatherContainer>
+        </CardContainer> 
+          <CodeLinks href='http://bulk.openweathermap.org/sample/'>Country Codes</CodeLinks> 
+    </WeatherContainer> }
+    </>
   )
 }
 
