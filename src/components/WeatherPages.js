@@ -6,71 +6,104 @@ import cloudSuny from '../images/weather1.png'
 import rain from '../images/rain.png'
 import snow from '../images/snow.png'
 import sunny from '../images/sunny.png'
+import { useEffect } from 'react'
 const WeatherPages = () => {
-    const context = useGlobalContext()
-    const {articals,weather,cardThree} = context  
+  const context = useGlobalContext()
+  const { articals, weather, cardThree, cardOne, cardTwo, setWeather, Command, setArticals } = context
+  const handleWeather = async () => {
+    const API_KEY = `6e1c1b84f4266237ace3e568fbf81eb3`;
+    let WEATHER_API_URL = ''
+    if (cardOne == true) {
+      WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/weather?q=${Command}&appid=${API_KEY}`;
+
+    } else if (cardTwo == true) {
+      alert("reo")
+      WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/weather?id=${Command}&appid=${API_KEY}`
+    }
+    else {
+      const WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/forecast?q=${Command}&apiKey=${API_KEY}`
+      await fetch(WEATHER_API_URL)
+        .then(res => res.json())
+        .then(data => {
+          setWeather(data.list)
+        }).catch(error => {
+          console.error('Error:', error);
+        })
+    }
+    console.log(WEATHER_API_URL);
+    await fetch(WEATHER_API_URL)
+      .then(res => res.json())
+      .then(data => {
+        setArticals(data)
+      }).catch(error => {
+        console.error('Error:', error);
+      })
+  }
+  useEffect(() => {
+    handleWeather()
+  }, [Command])
   return (
     <>
-    <NewPagesContainer>
-    <H>Alan AI Weather Application</H>
-     { cardThree == true ?
-     weather.map((w) => {
-      return <CardDays>
-      <Day>{w.dt_txt.slice(0,11)}</Day>
-     { w.weather.map((w) => {
-         if(w.main == 'Clouds') {
-          return <WetherImage src={cloudSuny}></WetherImage>
-        }else if (w.main == "Rain") {
-          return <WetherImage  src={rain}></WetherImage> 
-        }
-        else if (w.main == "Snow") {
-          return <WetherImage  src={snow}></WetherImage> 
-        }
-        else if (w.main == "Clear") {
-          return <WetherImage  src={sunny}></WetherImage> 
-        }
-     })
-     }         
-      <Max>{Math.floor(w.main.temp_max - 273)}°</Max>
-      <Min>{Math.round(w.main.temp_min - 273)}°</Min>
-   </CardDays>
-     })
-     
-     
-     :
-        <Card key={Math.random() + Math.random()} >                              
-                 <Cityname>Weather in {articals.name}</Cityname>
-                 <Temp>{articals?.weather?.map((w) => {
-                  if(w.main == 'Clouds') {
-                    return <WetherImage  src={cloudSuny}></WetherImage>
-                  }else if (w.main == "Rain") {
-                    return <WetherImage  src={rain}></WetherImage> 
-                  }
-                  else if (w.main == "Snow") {
-                    return <WetherImage  src={snow}></WetherImage> 
-                  }
-                  else if (w.main == "Clear") {
-                    return <WetherImage  src={sunny}></WetherImage> 
-                  }
-                 })}{Math.floor(articals?.main?.temp - 273)}°C</Temp>
-                 <Feelslike>Feels Like: {articals?.weather?.map((w) => {
-                  if(w.main == 'Clouds') {
-                    return <Description >{w.description}</Description> 
-                  }else if (w.main == "Rain") {
-                    return <Description >{w.description}</Description> 
-                  }
-                  else if (w.main == "Snow") {
-                    return <Description>{w.description} </Description> 
-                  }
-                  else if (w.main == "Clear") {
-                    return <span>{w.description}</span> 
-                  }
-                 })}</Feelslike>
-                 <Humidity><span>Humidity:</span>  {articals?.main?.humidity}%</Humidity>
-                 <Windspeed><span>Wind Speed:</span>  {articals?.wind?.speed}  km/h</Windspeed>
-                 <Pressure><span >Pressure:</span>{articals?.main?.pressure}  hpa </Pressure>
-    </Card>}
-    </NewPagesContainer>
+      <NewPagesContainer>
+        <H>Alan AI Weather Application</H>
+        {cardThree == true ?
+          weather.map((w) => {
+            return <CardDays>
+              <Day>{w.dt_txt.slice(0, 11)}</Day>
+              {w.weather.map((w) => {
+                if (w.main == 'Clouds') {
+                  return <WetherImage src={cloudSuny}></WetherImage>
+                } else if (w.main == "Rain") {
+                  return <WetherImage src={rain}></WetherImage>
+                }
+                else if (w.main == "Snow") {
+                  return <WetherImage src={snow}></WetherImage>
+                }
+                else if (w.main == "Clear") {
+                  return <WetherImage src={sunny}></WetherImage>
+                }
+              })
+              }
+              <Max>{Math.floor(w.main.temp_max - 273)}°</Max>
+              <Min>{Math.round(w.main.temp_min - 273)}°</Min>
+            </CardDays>
+          })
+
+
+          :
+          <Card key={Math.random() + Math.random()} >
+            <Cityname>Weather in {articals.name}</Cityname>
+            <Temp>{articals?.weather?.map((w) => {
+              if (w.main == 'Clouds') {
+                return <WetherImage src={cloudSuny}></WetherImage>
+              } else if (w.main == "Rain") {
+                return <WetherImage src={rain}></WetherImage>
+              }
+              else if (w.main == "Snow") {
+                return <WetherImage src={snow}></WetherImage>
+              }
+              else if (w.main == "Clear") {
+                return <WetherImage src={sunny}></WetherImage>
+              }
+            })}{Math.floor(articals?.main?.temp - 273)}°C</Temp>
+            <Feelslike>Feels Like: {articals?.weather?.map((w) => {
+              if (w.main == 'Clouds') {
+                return <Description >{w.description}</Description>
+              } else if (w.main == "Rain") {
+                return <Description >{w.description}</Description>
+              }
+              else if (w.main == "Snow") {
+                return <Description>{w.description} </Description>
+              }
+              else if (w.main == "Clear") {
+                return <span>{w.description}</span>
+              }
+            })}</Feelslike>
+            <Humidity><span>Humidity:</span>  {articals?.main?.humidity}%</Humidity>
+            <Windspeed><span>Wind Speed:</span>  {articals?.wind?.speed}  km/h</Windspeed>
+            <Pressure><span >Pressure:</span>{articals?.main?.pressure}  hpa </Pressure>
+          </Card>}
+      </NewPagesContainer>
     </>
   )
 }

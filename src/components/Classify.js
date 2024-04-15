@@ -5,7 +5,7 @@ const classifications = [
    },
    {
     id:2,
-    footer:"Give me the weather of code 833 ",
+    footer:"Give me weather code 833 ",
    },
    {
     id:3,

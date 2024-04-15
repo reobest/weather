@@ -3,54 +3,57 @@ import styled from 'styled-components';
 import weather from '../images/Weather.jpg'
 import classifications from './Classify';
 import { useGlobalContext } from './context';
-import { useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 const Weather = () => {
   const navigate = useNavigate();
-    const context = useGlobalContext()
-    const {cardOne,cardTwo,cardThree,handleNavigate,keyWord,setKeyWord,start} = context 
-    const handleKeyWord = () => {
-      if(cardOne == true ) {
-        setKeyWord("1")
-      }else if(cardTwo == true){
-        setKeyWord("2")
-      }else if(cardTwo == true){
-        setKeyWord("3")
-      }else{
-        setKeyWord("")
-      }
+  const context = useGlobalContext()
+  const { cardOne, cardTwo, cardThree, handleNavigate, keyWord, setKeyWord, start, setCardOne, setCardTwo, setCardThree } = context
+  const handleKeyWord = () => {
+    if (cardOne == true) {
+      setKeyWord("1")
+    } else if (cardTwo == true) {
+      setKeyWord("2")
+    } else if (cardTwo == true) {
+      setKeyWord("3")
+    } else {
+      setKeyWord("")
     }
-    const handleWeatherPage = () => {
-      if(keyWord == "1" && cardOne ) {
-        handleNavigate(keyWord)
-        navigate(`/${keyWord}`)
-      }
-      if(keyWord == "2" && cardTwo ) {
-        handleNavigate(keyWord)
-        navigate(`/${keyWord}`)
-      }
-      if(keyWord == "3" && cardThree ) {
-        handleNavigate(keyWord)
-        navigate(`/${keyWord}`)
-      }
+  }
+  const handleWeatherPage = () => {
+    if (keyWord == "1" && cardOne) {
+      handleNavigate(keyWord)
+      navigate(`/${keyWord}`)
+      setCardOne(false)
     }
-    handleKeyWord()
-    handleWeatherPage()
+    if (keyWord == "2" && cardTwo) {
+      handleNavigate(keyWord)
+      navigate(`/${keyWord}`)
+      setCardTwo(false)
+    }
+    if (keyWord == "3" && cardThree) {
+      handleNavigate(keyWord)
+      navigate(`/${keyWord}`)
+      setCardThree(false)
+    }
+  }
+  handleKeyWord()
+  handleWeatherPage()
 
   const newCards = classifications.map((classification) => {
-        const {footer,id} = classification  
- return <Card key={id}>
-           <TrySaying>Try Saying : {footer}</TrySaying>
-        </Card>
-  }) 
+    const { footer, id } = classification
+    return <Card key={id}>
+      <TrySaying>Try Saying : {footer}</TrySaying>
+    </Card>
+  })
   return (
     <>
-    { start && <WeatherContainer>
-      <CardContainer>
-        <Header>Alan AI Weather Application</Header>
+      {start && <WeatherContainer>
+        <CardContainer>
+          <Header>Alan AI Weather Application</Header>
           {newCards}
-        </CardContainer> 
-          <CodeLinks href='http://bulk.openweathermap.org/sample/'>Country Codes</CodeLinks> 
-    </WeatherContainer> }
+        </CardContainer>
+        <CodeLinks href='http://bulk.openweathermap.org/sample/'>Country Codes</CodeLinks>
+      </WeatherContainer>}
     </>
   )
 }
@@ -104,7 +107,7 @@ justify-content: center;
 background: url(${weather});
 background-size: cover;
 `
-const Card  = styled.div`
+const Card = styled.div`
 position: relative;
 letter-spacing: 1px;
 text-align: center;

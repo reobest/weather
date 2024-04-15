@@ -5,17 +5,17 @@ import { useGlobalContext } from './context'
 import { useNavigate } from 'react-router-dom';
 const Start = () => {
   const context = useGlobalContext()
-    const {start} = context 
-    const navigate = useNavigate();
-    if(start == true){
-      setTimeout(() => {
-        navigate('/start')
-      }, 2000);
-    }else{
-      setTimeout(() => {
-        navigate('/')
-      }, 2000);
-    }
+  const { start } = context
+  const navigate = useNavigate();
+  if (start == true) {
+    setTimeout(() => {
+      navigate('/start')
+    }, 2000);
+  } else {
+    setTimeout(() => {
+      navigate('/')
+    }, 2000);
+  }
   return (
     <WeatherContainer>
       <Alan start={start}>Alan</Alan>
